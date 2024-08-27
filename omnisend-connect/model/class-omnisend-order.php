@@ -9,7 +9,6 @@ defined( 'ABSPATH' ) || exit;
 
 class Omnisend_Order {
 	public $email;
-	public $phone;
 	public $currency;
 	public $source;
 	public $products = array();
@@ -71,12 +70,7 @@ class Omnisend_Order {
 			$this->email = $email;
 		}
 
-		$phone = $order->get_billing_phone();
-		if ( filter_var( $phone, FILTER_SANITIZE_NUMBER_INT ) ) {
-			$this->phone = $phone;
-		}
-
-		if ( empty( $this->email ) && empty( $this->phone ) ) {
+		if ( empty( $this->email ) ) {
 			throw new Omnisend_Empty_Required_Fields_Exception();
 		}
 
@@ -182,7 +176,11 @@ class Omnisend_Order {
 		// phpcs:enabled
 
 		$phone_number = $order_data['billing']['phone'];
-		if ( $phone_number ) {
+		if ( empty( $phone_number ) ) {
+			$phone_number = $order->get_billing_phone();
+		}
+
+		if ( $phone_number && filter_var( $phone_number, FILTER_SANITIZE_NUMBER_INT ) ) {
 			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			$this->billingAddress['phone'] = $phone_number;
 		}

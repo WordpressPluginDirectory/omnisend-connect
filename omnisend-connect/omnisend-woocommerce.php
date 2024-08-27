@@ -3,14 +3,14 @@
  * Plugin Name: Omnisend for WooCommerce
  * Plugin URI: https://www.omnisend.com
  * Description: 100,000+ ecommerce stores use Omnisend to sell more stuff to more people. Send newsletters & SMS and build email lists with popups.
- * Version: 1.15.12
+ * Version: 1.15.17
  * Author: Omnisend
  * Author URI: https://www.omnisend.com
  * Developer: Omnisend
  * Developer URI: https://developers.omnisend.com
  *
  * WC requires at least: 6.0
- * WC tested up to: 8.1
+ * WC tested up to: 9.1
  *
  * Copyright: © 2018 Omnisend
  * License: GPLv3 or later License
@@ -68,11 +68,11 @@ require_once 'manager/class-omnisend-contact-cache.php';
 require_once 'model/class-omnisend-product.php';
 require_once 'model/class-omnisend-contact.php';
 require_once 'model/class-omnisend-cart.php';
+require_once 'model/class-omnisend-cart-event.php';
 require_once 'model/class-omnisend-order.php';
 require_once 'model/class-omnisend-category.php';
 require_once 'model/class-omnisend-sync.php';
 require_once 'model/class-omnisend-connection-error.php';
-require_once 'model/class-omnisend-cart-event.php';
 /*Include Ajax classes & functions*/
 require_once 'class-omnisend-operation-status.php';
 require_once 'class-omnisend-ajax.php';
@@ -101,6 +101,7 @@ require_once 'view/settings/sync.php';
 require_once 'view/settings/checkout-opt-in-checkbox.php';
 
 require_once 'includes/omnisend-api.php';
+require_once 'includes/omnisend-cart-event-filter.php';
 require_once 'includes/class-omnisend-install.php';
 require_once 'includes/class-omnisend-logs.php';
 

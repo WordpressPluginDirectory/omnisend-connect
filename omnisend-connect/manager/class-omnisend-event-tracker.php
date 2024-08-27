@@ -11,11 +11,13 @@ class Omnisend_Event_Tracker {
 
 	public static function track_event( $event_name = '', $event_time = '', $email = '', $props = array() ) {
 		if ( ! $event_name ) {
-			return; }
+			return;
+		}
 
 		$brand_id = get_option( 'omnisend_account_id', null );
 		if ( ! $brand_id ) {
-			return; }
+			return;
+		}
 
 		$contact_id = Omnisend_User_Storage::get_contact_id();
 
@@ -53,6 +55,9 @@ class Omnisend_Event_Tracker {
 			OMNISEND_EVENTS_TRACKING_URL,
 			array(
 				'blocking' => false,
+				'headers'  => array(
+					'Content-Type' => 'application/json',
+				),
 				'body'     => $body,
 			)
 		);

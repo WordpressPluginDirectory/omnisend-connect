@@ -9,7 +9,10 @@ defined( 'ABSPATH' ) || exit;
 
 class Omnisend_Logs_Sender {
 	public static function send( $logs ) {
-		$headers = array( 'KEY' => OMNISEND_LOGS_KEY );
+		$headers = array(
+			'KEY'          => OMNISEND_LOGS_KEY,
+			'Content-Type' => 'application/json',
+		);
 		$body    = array(
 			'brandID'       => get_option( 'omnisend_account_id', '' ),
 			'ipAddress'     => Omnisend_Helper::get_client_ip(),

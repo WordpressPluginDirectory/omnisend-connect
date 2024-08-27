@@ -43,6 +43,12 @@ function omnisend_rebuild_cart() {
 	$cart_products = $omni_cart['products'];
 
 	foreach ( $cart_products as $product ) {
+		if ( isset( $product['woosb_ids'] ) ) {
+			$_REQUEST['woosb_ids'] = $product['woosb_ids'];
+		}
+		if ( isset( $product['wooco_ids'] ) ) {
+			$_REQUEST['wooco_ids'] = $product['wooco_ids'];
+		}
 		$woocommerce->cart->add_to_cart(
 			$product['product_id'],
 			$product['quantity'],

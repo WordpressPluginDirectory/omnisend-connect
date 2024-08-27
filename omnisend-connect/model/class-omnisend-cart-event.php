@@ -31,10 +31,11 @@ class Omnisend_Cart_Event {
 				'attributes'   => $variation,
 			);
 
-			$cart_item = WC()->cart->get_cart()[ $cart_item_key ];
+			$cart_item = WC()->cart->get_cart()[ $cart_item_key ] ?? null;
 
 			if ( ! is_null( $cart_item ) ) {
 				$added_item['link'] = $cart_item['data']->get_permalink( $cart_item );
+				$added_item         = apply_filters( 'omnisend_cart_line_item', $added_item, $cart_item );
 			}
 		}
 
@@ -57,14 +58,14 @@ class Omnisend_Cart_Event {
 		$cart = WC()->cart;
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
-			$data      = $cart_item['data'];
 			$line_item = array(
 				'product_id'   => $cart_item['product_id'],
 				'variation_id' => $cart_item['variation_id'],
 				'quantity'     => $cart_item['quantity'],
-				'link'         => $data->get_permalink( $cart_item ),
+				'link'         => $cart_item['data']->get_permalink( $cart_item ),
 				'attributes'   => $cart_item['variation'],
 			);
+			$line_item = apply_filters( 'omnisend_cart_line_item', $line_item, $cart_item );
 			array_push( $items, $line_item );
 		}
 
@@ -98,7 +99,7 @@ class Omnisend_Cart_Event {
 				'product_id'   => $cart_item['product_id'],
 				'quantity'     => $cart_item['quantity'],
 				'variation_id' => $cart_item['variation_id'],
-				'variation'    => $cart_item['variation'],
+				'variation'    => $cart_item['variation'] ?? array(),
 			);
 
 			array_push( $products, $product );

@@ -80,7 +80,7 @@ function omnisend_post_omnisend_settings( WP_REST_Request $request ) {
 	}
 }
 
-function connect_omnisend_account( WP_REST_Request $request ) {
+function omnisend_connect_account( WP_REST_Request $request ) {
 	$body = json_decode( $request->get_body(), true );
 
 	if ( ! isset( $body['brand_id'] ) || ! isset( $body['omnisend_api_key'] ) ) {
@@ -100,6 +100,17 @@ function connect_omnisend_account( WP_REST_Request $request ) {
 	Omnisend_Manager_Assistant::init_sync();
 
 	return array( 'success' => true );
+}
+
+function omnisend_post_disconnect() {
+	if ( Omnisend_Helper::is_omnisend_connected() ) {
+		Omnisend_Logger::info( 'Disconnecting plugin via API' );
+		Omnisend_Install::disconnect();
+
+		$response = new WP_REST_Response();
+		$response->set_status( 204 );
+		return $response;
+	}
 }
 
 function validate_connect_token( WP_REST_Request $request ) {
@@ -174,8 +185,17 @@ add_action(
 			'/connect',
 			array(
 				'methods'             => 'POST',
-				'callback'            => 'connect_omnisend_account',
+				'callback'            => 'omnisend_connect_account',
 				'permission_callback' => 'validate_connect_token',
+			)
+		);
+		register_rest_route(
+			'omnisend-api/v1',
+			'/disconnect',
+			array(
+				'methods'             => 'POST',
+				'callback'            => 'omnisend_post_disconnect',
+				'permission_callback' => 'omnisend_rest_api_authorization',
 			)
 		);
 		register_rest_route(

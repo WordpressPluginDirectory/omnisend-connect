@@ -21,6 +21,7 @@ class Omnisend_Cart_Event {
 			return;
 		}
 
+		$cart       = WC()->cart;
 		$added_item = null;
 
 		if ( (bool) $product_id ) {
@@ -30,8 +31,14 @@ class Omnisend_Cart_Event {
 				'quantity'     => $quantity,
 				'attributes'   => $variation,
 			);
+			$cart_item  = null;
 
-			$cart_item = WC()->cart->get_cart()[ $cart_item_key ] ?? null;
+			foreach ( $cart->get_cart() as $key => $item ) {
+				if ( $item['product_id'] === $product_id && $item['variation_id'] === $variation_id ) {
+					$cart_item = $item;
+					break;
+				}
+			}
 
 			if ( ! is_null( $cart_item ) ) {
 				$added_item['link'] = $cart_item['data']->get_permalink( $cart_item );
@@ -39,12 +46,12 @@ class Omnisend_Cart_Event {
 			}
 		}
 
-		Omnisend_Event_Tracker::track_event( self::ADDED_PRODUCT_TO_CART, $event_time, '', self::build_event_props( $added_item ) );
+		Omnisend_Event_Tracker::track_event( self::ADDED_PRODUCT_TO_CART, $event_time, '', self::build_event_props( $cart, $added_item ) );
 	}
 
 	public static function started_checkout( $email = '', $event_time = '' ) {
 		if ( self::is_cart_valid() ) {
-			Omnisend_Event_Tracker::track_event( self::STARTED_CHECKOUT, $event_time, $email, self::build_event_props( null ) );
+			Omnisend_Event_Tracker::track_event( self::STARTED_CHECKOUT, $event_time, $email, self::build_event_props( WC()->cart, null ) );
 		}
 	}
 
@@ -52,10 +59,8 @@ class Omnisend_Cart_Event {
 		return ! WC()->cart->is_empty();
 	}
 
-	private static function build_event_props( $added_item ) {
+	private static function build_event_props( $cart, $added_item ) {
 		$items = array();
-
-		$cart = WC()->cart;
 
 		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			$line_item = array(

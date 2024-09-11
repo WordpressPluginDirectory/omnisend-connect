@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 function is_omnisend_account_connected() {
 
 	$response = new WP_REST_Response( (bool) Omnisend_Settings::get_brand_id() );
-	$response->set_headers( array( 'Cache-Control' => 'no-cache' ) );
+	$response->set_headers( array( 'Cache-Control' => 'no-cache, must-revalidate, max-age=0, no-store, private' ) );
 
 	return $response;
 }
@@ -49,7 +49,10 @@ function omnisend_get_system_status() {
 		),
 	);
 
-	return $body;
+	$response = new WP_REST_Response( $body );
+	$response->set_headers( array( 'Cache-Control' => 'no-cache, must-revalidate, max-age=0, no-store, private' ) );
+
+	return $response;
 }
 
 function omnisend_post_omnisend_settings( WP_REST_Request $request ) {
@@ -146,7 +149,8 @@ function validate_connect_token( WP_REST_Request $request ) {
 }
 
 function omnisend_rest_api_authorization( WP_REST_Request $request ) {
-	$request_api_key = $request->get_header( 'x-api-key' ) ?? $request->get_query_params()['x-api-key'];
+	do_action( 'litespeed_control_set_nocache' );
+	$request_api_key = $request->get_header( 'x-api-key' );
 
 	if ( ! $request_api_key ) {
 		return new WP_Error(
@@ -184,7 +188,7 @@ add_action(
 			'omnisend-api/v1',
 			'/connect',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => 'omnisend_connect_account',
 				'permission_callback' => 'validate_connect_token',
 			)
@@ -193,7 +197,7 @@ add_action(
 			'omnisend-api/v1',
 			'/disconnect',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => 'omnisend_post_disconnect',
 				'permission_callback' => 'omnisend_rest_api_authorization',
 			)
@@ -202,7 +206,7 @@ add_action(
 			'omnisend-api/v1',
 			'/connected',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => 'is_omnisend_account_connected',
 				'permission_callback' => '__return_true',
 			)
@@ -211,7 +215,7 @@ add_action(
 			'omnisend-api/v1',
 			'/status',
 			array(
-				'methods'             => 'GET',
+				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => 'omnisend_get_system_status',
 				'permission_callback' => 'omnisend_rest_api_authorization',
 			)
@@ -220,7 +224,7 @@ add_action(
 			'omnisend-api/v1',
 			'/omnisend-settings',
 			array(
-				'methods'             => 'POST',
+				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => 'omnisend_post_omnisend_settings',
 				'permission_callback' => 'omnisend_rest_api_authorization',
 			)

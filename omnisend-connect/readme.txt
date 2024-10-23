@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
 Tested up to: 6.6
 Requires PHP: 7.1
-Stable tag: 1.15.19
+Stable tag: 1.15.20
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -279,7 +279,7 @@ Here are a few simple steps to start selling more with Omnisend:
 
 = What are the technical requirements for the plugin installation? =
 *   PHP 7.1+
-*   WordPress 4.0.1+
+*   WordPress 4.7.0+
 *   WooCommerce plugin 6.0+
 *   Omnisend account
 
@@ -305,6 +305,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 9. Convert more visitors with highly-targeted landing pages
 
 == Changelog ==
+
+= 1.15.20 =
+
+* Add "opt-in" checkbox support for checkout blocks.
 
 = 1.15.19 =
 

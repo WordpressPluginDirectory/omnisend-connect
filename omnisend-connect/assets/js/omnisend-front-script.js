@@ -5,6 +5,27 @@ ajax_url
 var omnisend_email_submitted          = '';
 var omnisend_email_submit_in_progress = false;
 
+window.addEventListener(
+	'load',
+	function () {
+		var emailInput = document.querySelector( '.wc-block-components-text-input > #email' );
+		if (emailInput) {
+			emailInput.addEventListener(
+				'focus',
+				function () {
+					omnisend_handle_email_change( '.wc-block-components-text-input > #email' )
+				}
+			)
+			emailInput.addEventListener(
+				'change',
+				function () {
+					omnisend_handle_email_change( '.wc-block-components-text-input > #email' )
+				}
+			)
+		}
+	}
+);
+
 jQuery( document ).ready(
 	function () {
 		['#billing_email', '#username', '#reg_email'].forEach(
@@ -57,7 +78,7 @@ function omnisend_handle_email_change(selector) {
 		email: email,
 		_wpnonce: omnisend_woo_data.nonce
 	})
-	
+
 	if (omnisend_woo_data.contact_id) {
 		urlParams.set('contact_id', omnisend_woo_data.contact_id)
 	}
@@ -66,7 +87,7 @@ function omnisend_handle_email_change(selector) {
 
 	fetch(url, {
 		method: 'POST',
-		headers: { 
+		headers: {
 			Accept: 'application/json'
 		}
 	})

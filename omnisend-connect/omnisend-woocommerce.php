@@ -3,7 +3,7 @@
  * Plugin Name: Omnisend for WooCommerce
  * Plugin URI: https://www.omnisend.com
  * Description: 100,000+ ecommerce stores use Omnisend to sell more stuff to more people. Send newsletters & SMS and build email lists with popups.
- * Version: 1.15.20
+ * Version: 1.15.21
  * Author: Omnisend
  * Author URI: https://www.omnisend.com
  * Developer: Omnisend
@@ -25,6 +25,7 @@ if ( ! defined( 'OMNISEND_WOO_PLUGIN_FILE' ) ) {
 	define( 'OMNISEND_WOO_PLUGIN_FILE', __FILE__ );
 }
 
+define( 'OMNISEND_APP_DOMAIN', 'app.omnisend.com' );
 define( 'OMNISEND_APP_URL', 'https://app.omnisend.com' );
 define( 'OMNISEND_API_URL', 'https://api.omnisend.com' );
 define( 'OMNISEND_SNIPPET_URL', 'https://omnisnippet1.com/inshop/launcher-v2.js' );
@@ -35,6 +36,7 @@ define( 'OMNISEND_LOGS_URL', OMNISEND_APP_URL . '/woocommerce/plugin/logs' );
 define( 'OMNISEND_ACTIVATION_URL', OMNISEND_APP_URL . '/woocommerce/plugin/activation' );
 define( 'OMNISEND_UPDATE_URL', OMNISEND_APP_URL . '/woocommerce/plugin/update' );
 define( 'OMNISEND_SETTINGS_PAGE', 'omnisend-woocommerce' );
+define( 'OMNISEND_AUTHORIZATION_PAGE', 'omnisend-authorize' );
 define( 'OMNISEND_LOGS_PAGE', 'omnisend-logs' );
 define( 'OMNISEND_SYNC_PAGE', 'omnisend-sync' );
 define( 'OMNISEND_WC_API_APP_NAME', 'Omnisend App' );
@@ -78,6 +80,8 @@ require_once 'class-omnisend-operation-status.php';
 require_once 'class-omnisend-ajax.php';
 /*Include settings page display function*/
 require_once 'omnisend-settings-page.php';
+/*Include authorization page display function*/
+require_once 'omnisend-authorization-page.php';
 /*Include logs page display function*/
 require_once 'omnisend-logs.php';
 /*Include WooCommerce hooks*/
@@ -133,6 +137,7 @@ function omnisend_woocommerce_menu() {
 	// phpcs:enable
 
 	add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $omnisend_icon, 2 );
+	add_submenu_page( null, 'Omnisend Authorization', 'Omnisend Authorization', 'manage_options', OMNISEND_AUTHORIZATION_PAGE, 'omnisend_show_authorization_page' );
 }
 
 /**
@@ -341,4 +346,13 @@ function omnisend_deactivate() {
 register_uninstall_hook( __FILE__, 'omnisend_uninstall' );
 function omnisend_uninstall() {
 	Omnisend_Install::uninstall();
+}
+
+add_filter( 'allowed_redirect_hosts', 'omnisend_add_allowed_redirect_hosts' );
+function omnisend_add_allowed_redirect_hosts( $domains ) {
+	if ( is_array( $domains ) ) {
+		array_push( $domains, OMNISEND_APP_DOMAIN );
+	}
+
+	return $domains;
 }

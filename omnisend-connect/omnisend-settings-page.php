@@ -54,7 +54,8 @@ function display_settings() {
 		omnisend_display_omnisend_connected();
 		omnisend_display_tabs();
 		omnisend_display_permalink_notice( 'top' );
-		omnisend_display_api_access_notice();
+		omnisend_display_api_access_granted_notice();
+		omnisend_display_api_bad_status_notice();
 		omnisend_display_account_information();
 		omnisend_display_checkout_opt_in_checkbox_settings();
 		omnisend_display_tag_settings();

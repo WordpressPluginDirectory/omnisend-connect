@@ -27,15 +27,16 @@ class Omnisend_Contact_Resolver {
 		}
 
 		Omnisend_User_Storage::set_contact_id( $contact_id );
-		Omnisend_Logger::debug( "ContactID $contact_id for email $user->user_email stored in user cookie for cart recovery" );
+		Omnisend_Logger::debug( "ContactID $contact_id for email $user->user_email stored in user cookie" );
 	}
 
 	public static function update_by_email_and_contact_id( $email, $contact_id ) {
 		Omnisend_Contact_Cache::set( $email, $contact_id );
+		Omnisend_Logger::debug( "Email $email with contactID $contact_id was store in contact cache table" );
 
 		if ( Omnisend_User_Storage::get_contact_id() != $contact_id ) {
 			Omnisend_User_Storage::set_contact_id( $contact_id );
-			Omnisend_Logger::debug( "ContactID $contact_id for email $email stored in user cookie for cart recovery" );
+			Omnisend_Logger::debug( "ContactID $contact_id for email $email stored in user cookie" );
 		}
 	}
 
@@ -55,7 +56,7 @@ class Omnisend_Contact_Resolver {
 		}
 
 		Omnisend_User_Storage::set_contact_id( $contact_id );
-		Omnisend_Logger::debug( "ContactID $contact_id for email $email stored in user cookie for cart recovery" );
+		Omnisend_Logger::debug( "ContactID $contact_id for email $email stored in user cookie" );
 
 		return true;
 	}
@@ -68,7 +69,7 @@ class Omnisend_Contact_Resolver {
 	private static function resolve_email_to_contact_id( $email ) {
 		$contact_id = Omnisend_Contact_Cache::get( $email );
 		if ( $contact_id ) {
-			Omnisend_Logger::debug( "Email $email resolved to contactID $contact_id (using WP options table)" );
+			Omnisend_Logger::debug( "Email $email resolved to contactID $contact_id (using contact cache table)" );
 			return $contact_id;
 		}
 
@@ -97,6 +98,7 @@ class Omnisend_Contact_Resolver {
 		}
 
 		$response = json_decode( $curl_result['response'], true );
-		return $response['contacts'][0]['contactID'];
+
+		return isset( $response['contacts'][0]['contactID'] ) ? $response['contacts'][0]['contactID'] : null;
 	}
 }

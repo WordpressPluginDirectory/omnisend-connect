@@ -13,7 +13,7 @@ class Omnisend_Sync_Manager {
 
 	public static function start_contacts() {
 		delete_option( 'omnisend_sync_contacts_finished' );
-		self::start_contacts_if_not_finished();
+		self::schedule_contacts_sync();
 	}
 
 	public static function start_contacts_if_not_finished() {
@@ -24,15 +24,7 @@ class Omnisend_Sync_Manager {
 			return;
 		}
 
-		if ( wp_next_scheduled( 'omnisend_init_contacts_sync' ) ) {
-			Omnisend_Logger::info( 'Contact sync is already started' );
-			return;
-		}
-
-		Omnisend_Logger::info( 'Contact sync started' );
-		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_contacts_sync' );
-
-		self::start_check_batches_if_not_started();
+		self::schedule_contacts_sync();
 	}
 
 	public static function finish_contacts() {
@@ -75,7 +67,7 @@ class Omnisend_Sync_Manager {
 
 	public static function start_orders() {
 		delete_option( 'omnisend_sync_orders_finished' );
-		self::start_orders_if_not_finished();
+		self::schedule_orders_sync();
 	}
 
 	public static function start_orders_if_not_finished() {
@@ -86,15 +78,7 @@ class Omnisend_Sync_Manager {
 			return;
 		}
 
-		if ( wp_next_scheduled( 'omnisend_init_orders_sync' ) ) {
-			Omnisend_Logger::info( 'Order sync is already started' );
-			return;
-		}
-
-		Omnisend_Logger::info( 'Order sync started' );
-		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_orders_sync' );
-
-		self::start_check_batches_if_not_started();
+		self::schedule_orders_sync();
 	}
 
 	public static function finish_orders() {
@@ -132,7 +116,7 @@ class Omnisend_Sync_Manager {
 
 	public static function start_products() {
 		delete_option( 'omnisend_sync_products_finished' );
-		self::start_products_if_not_finished();
+		self::shedule_products_sync();
 	}
 
 	public static function start_products_if_not_finished() {
@@ -143,15 +127,7 @@ class Omnisend_Sync_Manager {
 			return;
 		}
 
-		if ( wp_next_scheduled( 'omnisend_init_products_sync' ) ) {
-			Omnisend_Logger::info( 'Product sync is already started' );
-			return;
-		}
-
-		Omnisend_Logger::info( 'Product sync started' );
-		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_products_sync' );
-
-		self::start_check_batches_if_not_started();
+		self::shedule_products_sync();
 	}
 
 	public static function finish_products() {
@@ -189,7 +165,7 @@ class Omnisend_Sync_Manager {
 
 	public static function start_categories() {
 		delete_option( 'omnisend_sync_categories_finished' );
-		self::start_categories_if_not_finished();
+		self::schedule_categories_sync();
 	}
 
 	public static function start_categories_if_not_finished() {
@@ -200,13 +176,7 @@ class Omnisend_Sync_Manager {
 			return;
 		}
 
-		if ( wp_next_scheduled( 'omnisend_init_categories_sync' ) ) {
-			Omnisend_Logger::info( 'Category sync is already started' );
-			return;
-		}
-
-		Omnisend_Logger::info( 'Category sync started' );
-		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_categories_sync' );
+		self::schedule_categories_sync();
 	}
 
 	public static function finish_categories() {
@@ -320,5 +290,51 @@ class Omnisend_Sync_Manager {
 		}
 
 		return true;
+	}
+
+	private static function schedule_contacts_sync() {
+		if ( wp_next_scheduled( 'omnisend_init_contacts_sync' ) ) {
+			Omnisend_Logger::info( 'Contact sync is already started' );
+			return;
+		}
+
+		Omnisend_Logger::info( 'Contact sync started' );
+		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_contacts_sync' );
+
+		self::start_check_batches_if_not_started();
+	}
+
+	private static function schedule_orders_sync() {
+		if ( wp_next_scheduled( 'omnisend_init_orders_sync' ) ) {
+			Omnisend_Logger::info( 'Order sync is already started' );
+			return;
+		}
+
+		Omnisend_Logger::info( 'Order sync started' );
+		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_orders_sync' );
+
+		self::start_check_batches_if_not_started();
+	}
+
+	private static function shedule_products_sync() {
+		if ( wp_next_scheduled( 'omnisend_init_products_sync' ) ) {
+			Omnisend_Logger::info( 'Product sync is already started' );
+			return;
+		}
+
+		Omnisend_Logger::info( 'Product sync started' );
+		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_products_sync' );
+
+		self::start_check_batches_if_not_started();
+	}
+
+	private static function schedule_categories_sync() {
+		if ( wp_next_scheduled( 'omnisend_init_categories_sync' ) ) {
+			Omnisend_Logger::info( 'Category sync is already started' );
+			return;
+		}
+
+		Omnisend_Logger::info( 'Category sync started' );
+		wp_schedule_event( time(), 'omnisend_every_two_minutes', 'omnisend_init_categories_sync' );
 	}
 }

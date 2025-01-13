@@ -11,7 +11,7 @@ $omnisend_product = '';
 
 class Omnisend_Manager {
 
-	const HTTP_STATUS_CODES_TO_RETRY_POST_IN_PUT = array( 400, 404, 422 );
+	const HTTP_STATUS_CODES_TO_RETRY_POST_IN_PUT = array( 400, 404, 409, 422 );
 	const VERB_POST                              = 'POST';
 	const VERB_PUT                               = 'PUT';
 
@@ -92,7 +92,7 @@ class Omnisend_Manager {
 			return;
 		}
 
-		$verbs_to_try = Omnisend_Sync::was_category_synced_before( $category->id ) ? array( self::VERB_PUT ) : array( self::VERB_POST, self::VERB_PUT );
+		$verbs_to_try = Omnisend_Sync::was_category_synced_before( $category->id ) ? array( self::VERB_PUT, self::VERB_POST ) : array( self::VERB_POST, self::VERB_PUT );
 		foreach ( $verbs_to_try as $verb ) {
 			$api_url     = $verb == self::VERB_POST ? OMNISEND_API_URL . '/v3/categories' : OMNISEND_API_URL . '/v3/categories/' . $category->id;
 			$curl_result = Omnisend_Helper::omnisend_api( $api_url, $verb, $category->to_array() );
@@ -105,7 +105,6 @@ class Omnisend_Manager {
 			}
 
 			if ( in_array( $curl_result['code'], self::HTTP_STATUS_CODES_TO_RETRY_POST_IN_PUT ) ) {
-				Omnisend_Logger::log( 'warn', 'categories', $api_url, "Unable to push category #$category->id to Omnisend. {$curl_result['response']}" );
 				continue;
 			}
 
@@ -118,13 +117,16 @@ class Omnisend_Manager {
 			break;
 		}
 
-		Omnisend_Sync::mark_category_sync_as_synced( $category->id );
+		Omnisend_Sync::mark_category_sync_as_error( $category->id );
 	}
 
 	public static function delete_category_from_omnisend( $id ) {
 		if ( ! empty( get_option( 'omnisend_api_key', null ) ) ) {
 			$link        = OMNISEND_API_URL . '/v3/categories/' . $id;
 			$curl_result = Omnisend_Helper::omnisend_api( $link, 'DELETE', array() );
+			if ( $curl_result['code'] >= 400 ) {
+				Omnisend_Logger::log( 'warn', 'categories', $link, 'Unable to remove category #' . $id . ' from Omnisend.' );
+			}
 			return $curl_result['response'];
 		}
 	}

@@ -2,15 +2,15 @@
 /**
  * Plugin Name: Omnisend for WooCommerce
  * Plugin URI: https://www.omnisend.com
- * Description: 100,000+ ecommerce stores use Omnisend to sell more stuff to more people. Send newsletters & SMS and build email lists with popups.
- * Version: 1.15.21
+ * Description: 125,000+ ecommerce stores use Omnisend to sell more stuff to more people. Send newsletters & SMS and build email lists with popups.
+ * Version: 1.15.27
  * Author: Omnisend
  * Author URI: https://www.omnisend.com
  * Developer: Omnisend
  * Developer URI: https://developers.omnisend.com
  *
  * WC requires at least: 6.0
- * WC tested up to: 9.1
+ * WC tested up to: 9.5
  *
  * Copyright: © 2018 Omnisend
  * License: GPLv3 or later License
@@ -94,6 +94,7 @@ require_once 'class-omnisend-all-sync-stats.php';
 require_once 'class-omnisend-sync-stats-repository.php';
 /* Include views */
 require_once 'view/settings/api-access-notice.php';
+require_once 'view/settings/api-bad-status-notice.php';
 require_once 'view/settings/navigation-tabs.php';
 require_once 'view/settings/account-information.php';
 require_once 'view/settings/connected.php';
@@ -209,9 +210,8 @@ function omnisend_front_scripts_and_styles() {
 		$handle,
 		'omnisend_woo_data',
 		array(
-			'ajax_url'   => admin_url( 'admin-ajax.php' ),
-			'contact_id' => Omnisend_User_Storage::get_contact_id(),
-			'nonce'      => wp_create_nonce( 'omnisend-front-script-nonce' ),
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'omnisend-front-script-nonce' ),
 		)
 	);
 	wp_enqueue_script( $handle, $file, array(), '1.0.0', true );
@@ -271,6 +271,8 @@ function omnisend_activated() {
 
 		Omnisend_Settings::add_checkout_opt_in_status( Omnisend_Settings::STATUS_ENABLED, 'default' );
 		Omnisend_Settings::add_checkout_opt_in_text( $default_checkout_opt_in_text, 'default' );
+		Omnisend_Settings::set_debug_logs_status( Omnisend_Settings::STATUS_DISABLED, 'default' );
+		Omnisend_Settings::set_notices_status( Omnisend_Settings::STATUS_ENABLED, 'default' );
 	}
 }
 

@@ -154,15 +154,27 @@ class Omnisend_Helper {
 			$timeout = 30;
 		}
 
+		$technical_partner = null;
+		if ( isset( $_SERVER['H_PLATFORM'] ) ) {
+			$technical_partner = explode( ' ', sanitize_text_field( wp_unslash( $_SERVER['H_PLATFORM'] ) ) )[0];
+		}
+
+		$technical_partner_plan = null;
+		if ( isset( $_SERVER['H_TYPE'] ) ) {
+			$technical_partner_plan = explode( ' ', sanitize_text_field( wp_unslash( $_SERVER['H_TYPE'] ) ) )[0];
+		}
+
 		$data = array(
-			'website'         => home_url(),
-			'version'         => $omnisend_plugin_version,
-			'timeout'         => $timeout,
-			'createdAt'       => gmdate( DATE_ATOM, time() ),
-			'currency'        => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : '',
-			'webserver'       => $web_server,
-			'phpVersion'      => $phpver[0],
-			'platformVersion' => get_bloginfo( 'version' ),
+			'website'              => home_url(),
+			'version'              => $omnisend_plugin_version,
+			'timeout'              => $timeout,
+			'createdAt'            => gmdate( DATE_ATOM, time() ),
+			'currency'             => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : '',
+			'webserver'            => $web_server,
+			'phpVersion'           => $phpver[0],
+			'platformVersion'      => get_bloginfo( 'version' ),
+			'technicalPartner'     => $technical_partner,
+			'technicalPartnerPlan' => $technical_partner_plan,
 		);
 		return $data;
 	}

@@ -1,12 +1,13 @@
 (function () {
-	var lastSentEmail = ''
+	let lastSentEmail = ''
+	const omnisend_contact_id= getCookieValue("omnisendContactID");
 
 	window.addEventListener(
 		'load',
 		function () {
 			var inputElement = document.querySelector( 'input[name="billing_email"], #billing_email, .wc-block-components-text-input > #email');
 			var email = inputElement && extractEmailValue( inputElement )
-			if (email || omnisend_checkout_vars.contact_id) {
+			if (email || omnisend_contact_id) {
 				trackEvent(email);
 			}
 
@@ -49,5 +50,12 @@
 		if (email) {
 			trackEvent( email )
 		}
+	}
+
+	function getCookieValue(key) {
+		const cookies = Object.fromEntries(
+			document.cookie.split('; ').map(cookie => cookie.split('='))
+		);
+		return cookies[key] ? decodeURIComponent(cookies[key]) : null;
 	}
 })();

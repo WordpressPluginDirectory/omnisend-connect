@@ -59,6 +59,14 @@ class Omnisend_Sync {
 		update_term_meta( $category_id, self::FIELD_NAME, gmdate( DATE_ATOM ) );
 	}
 
+	public static function mark_category_sync_as_error( $category_id ) {
+		update_term_meta( $category_id, self::FIELD_NAME, self::STATUS_ERROR );
+	}
+
+	public static function delete_category_meta_data( $category_id ) {
+		delete_metadata( 'term', $category_id, self::FIELD_NAME, '', false );
+	}
+
 	public static function get_order_meta_data( $order_id, $key ) {
 		$order = wc_get_order( $order_id );
 

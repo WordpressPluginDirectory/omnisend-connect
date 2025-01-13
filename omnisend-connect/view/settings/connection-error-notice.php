@@ -24,7 +24,7 @@ function omnisend_display_connection_error_notice() {
 	$error = new Omnisend_Connection_Error( $code );
 	?>
 	<div>
-		<div class="omnisend-notice omnisend-notice-error margin-bottom">
+		<div class="omnisend-notice omnisend-notice-danger margin-bottom">
 			<div class="omnisend-notice-content-container">
 				<img src="<?php echo esc_url( plugin_dir_url( __NAMESPACE__ ) ) . 'omnisend-connect/assets/img/warning_24.svg'; ?>">
 				<div class="omnisend-notice-texts-container">

@@ -3,9 +3,9 @@ Plugin Name: Email Marketing for WooCommerce by Omnisend
 Contributors: Omnisend
 Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.1
-Stable tag: 1.15.21
+Stable tag: 1.15.27
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,9 +16,9 @@ Email Marketing, Newsletter, Email Automation, Forms, Pop Up, SMS, Abandoned Car
 
 = THE EASIEST, MOST SIMPLE TO USE EMAIL MARKETING, NEWSLETTER, SMS MARKETING & AUTOMATION PLUGIN FOR WOOCOMMERCE =
 
-https://www.youtube.com/watch?v=7nU2Xq2OJ5Q
+https://www.youtube.com/watch?v=inmmjXZlz8o
 
-Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 100,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and grow your business with ease. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results – all from within your WordPress dashboard. Best of all, it’s completely free to get started!
+Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 125,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and grow your business with ease. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results – all from within your WordPress dashboard. Best of all, it’s completely free to get started!
 
 Some of the features of Omnisend include:
 
@@ -306,6 +306,32 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 1.15.27 =
+
+* Add notices in Omnisend plugin settings page.
+
+= 1.15.26 =
+
+* Improve category sync to omnisend.
+* Minor fixes.
+
+= 1.15.25 =
+
+* Unify omnisend contact id resolving in checkout.
+
+= 1.15.24 =
+
+* Improve omnisend contact id resolving for events.
+* Solve undefined array key exception in contact-resolver
+
+= 1.15.23 =
+
+* Improve plugin debug logs to enhance troubleshooting and provide better insights.
+
+= 1.15.22 =
+
+* Update WordPress listing.
+
 = 1.15.21 =
 
 * Add an endpoint for forcing authorization flow.
@@ -328,22 +354,3 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * Test plugin with WordPress 6.6 version.
 * Test plugin with WooCommerce 9.1 version.
 
-= 1.15.16 =
-
-* Add content-type headers on remote post methods.
-
-= 1.15.15 =
-
-* Handle undefined array key while getting cart item.
-
-= 1.15.14 =
-
-* Add possibility to restore wpc bundle and composite product carts.
-
-= 1.15.13 =
-
-* Add rest endpoint to disconnect plugin.
-
-= 1.15.12 =
-
-* Use order creation date as a marketing consent date if applicable.

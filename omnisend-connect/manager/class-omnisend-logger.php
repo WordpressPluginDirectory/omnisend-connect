@@ -8,7 +8,6 @@
 defined( 'ABSPATH' ) || exit;
 
 class Omnisend_Logger {
-	private static $log_debug = false;
 
 	public static function enable_logging() {
 		self::ensure_table_exists();
@@ -17,6 +16,7 @@ class Omnisend_Logger {
 
 	public static function disable_logging() {
 		Omnisend_Settings::set_logs_status( Omnisend_Settings::STATUS_DISABLED, Omnisend_Settings::SOURCE_ADMIN );
+		Omnisend_Settings::set_debug_logs_status( Omnisend_Settings::STATUS_DISABLED, Omnisend_Settings::SOURCE_ADMIN );
 	}
 
 	public static function is_logging_enabled() {
@@ -44,10 +44,10 @@ class Omnisend_Logger {
 
 	/**
 	 * This function should be placed in each function that is called by hook
-	 * Will log info about hook if $log_debug is enabled
+	 * Will log info about hook if omnisend_debug_logs_status is enabled
 	 */
 	public static function hook() {
-		if ( ! self::$log_debug ) {
+		if ( Omnisend_Settings::get_debug_logs_status() === Omnisend_Settings::STATUS_DISABLED ) {
 			return;
 		}
 		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
@@ -70,7 +70,7 @@ class Omnisend_Logger {
 	}
 
 	public static function debug( $message ) {
-		if ( self::$log_debug ) {
+		if ( Omnisend_Settings::get_debug_logs_status() === Omnisend_Settings::STATUS_ENABLED ) {
 			self::log( 'debug', '', '', $message );
 		}
 	}

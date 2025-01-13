@@ -35,6 +35,31 @@ class Omnisend_Product {
 		}
 	}
 
+	public static function product_picker() {
+		global $product;
+
+		if ( isset( $product ) && $product instanceof WC_Product ) {
+			$p = self::create( $product->get_id(), 'picker' );
+			if ( ! empty( $p ) ) {
+				echo "<script type='text/javascript'> \n
+                        omnisend_product = " . wp_json_encode( $p ) . " \n
+                    </script> \n";
+			}
+		}
+	}
+
+	public function get_unhidden_variations( $wc_product ) {
+		$available_variations = array();
+
+		foreach ( $wc_product->get_children() as $child_id ) {
+			$variation              = wc_get_product( $child_id );
+			$available_variations[] = $wc_product->get_available_variation( $variation );
+		}
+		$available_variations = array_filter( $available_variations );
+
+		return $available_variations;
+	}
+
 	/**
 	 * @throws Omnisend_Empty_Required_Fields_Exception
 	 */
@@ -269,28 +294,5 @@ class Omnisend_Product {
 			throw new Omnisend_Empty_Required_Fields_Exception();
 			// phpcs:enable
 		}
-	}
-	public static function product_picker() {
-		global $product;
-		if ( $product != null ) {
-			$p = self::create( $product->get_id(), 'picker' );
-			if ( ! empty( $p ) ) {
-				echo "<script type='text/javascript'> \n
-                        omnisend_product = " . wp_json_encode( $p ) . " \n
-                    </script> \n";
-			}
-		}
-	}
-
-	public function get_unhidden_variations( $wc_product ) {
-		$available_variations = array();
-
-		foreach ( $wc_product->get_children() as $child_id ) {
-			$variation              = wc_get_product( $child_id );
-			$available_variations[] = $wc_product->get_available_variation( $variation );
-		}
-		$available_variations = array_filter( $available_variations );
-
-		return $available_variations;
 	}
 }

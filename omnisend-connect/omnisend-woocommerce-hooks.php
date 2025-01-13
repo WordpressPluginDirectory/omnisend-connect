@@ -76,6 +76,7 @@ function omnisend_on_category_change( $term_id ) {
 function omnisend_category_delete( $post_id ) {
 	Omnisend_Logger::hook();
 	if ( Omnisend_Helper::is_woocommerce_plugin_activated() ) {
+		Omnisend_Sync::delete_category_meta_data( $post_id );
 		Omnisend_Manager::delete_category_from_omnisend( $post_id );
 	}
 }
@@ -229,9 +230,8 @@ function omnisend_add_checkout_script() {
 			$file_name,
 			'omnisend_checkout_vars',
 			array(
-				'ajax_url'   => admin_url( 'admin-ajax.php' ),
-				'contact_id' => Omnisend_User_Storage::get_contact_id(),
-				'nonce'      => wp_create_nonce( 'omnisend-checkout-script-nonce' ),
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'omnisend-checkout-script-nonce' ),
 			)
 		);
 		wp_enqueue_script( $file_name, $file_path, array(), '1.0.0', true );

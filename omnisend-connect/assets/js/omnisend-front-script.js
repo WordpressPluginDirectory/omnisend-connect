@@ -2,8 +2,9 @@
 omnisend_woo_data - object is created by WP, check following properties bellow
 ajax_url
  */
-var omnisend_email_submitted          = '';
-var omnisend_email_submit_in_progress = false;
+let omnisend_email_submitted          = '';
+let omnisend_email_submit_in_progress = false;
+const omnisend_contact_id= getCookieValue("omnisendContactID");
 
 window.addEventListener(
 	'load',
@@ -79,8 +80,8 @@ function omnisend_handle_email_change(selector) {
 		_wpnonce: omnisend_woo_data.nonce
 	})
 
-	if (omnisend_woo_data.contact_id) {
-		urlParams.set('contact_id', omnisend_woo_data.contact_id)
+	if (omnisend_contact_id) {
+		urlParams.set('contact_id', omnisend_contact_id)
 	}
 
 	var url = omnisend_woo_data.ajax_url + "?" + urlParams.toString();
@@ -101,4 +102,11 @@ function omnisend_handle_email_change(selector) {
 		.catch(function () {
 			omnisend_email_submit_in_progress = false;
 		})
+}
+
+function getCookieValue(key) {
+	const cookies = Object.fromEntries(
+		document.cookie.split('; ').map(cookie => cookie.split('='))
+	);
+	return cookies[key] ? decodeURIComponent(cookies[key]) : null;
 }

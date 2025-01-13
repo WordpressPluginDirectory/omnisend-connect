@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Omnisend_Content {
 	const DEFAULT_CONTENT = array(
-		'current_ecommerce_brands' => '100_000+',
+		'current_ecommerce_brands' => '125,000+',
 	);
 
 

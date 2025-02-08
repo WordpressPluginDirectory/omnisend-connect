@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
 Tested up to: 6.7
 Requires PHP: 7.1
-Stable tag: 1.15.27
+Stable tag: 1.15.29
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -305,6 +305,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 9. Convert more visitors with highly-targeted landing pages
 
 == Changelog ==
+
+= 1.15.29 =
+
+* Add omnisend_contact_data filter to allow custom contact data to be sent to Omnisend.
+* Add omnisend_cart_checkout_url_item filter to allow custom cart item data in checkout URL. This custom data is automatically recovered during cart recovery
+* Add omnisend_recover_cart_item_data filter to allow customizing recovered cart item data.
+
+= 1.15.28 =
+
+* Fix some error handling cases.
 
 = 1.15.27 =
 

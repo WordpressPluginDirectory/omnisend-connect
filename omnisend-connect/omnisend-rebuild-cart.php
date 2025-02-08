@@ -49,11 +49,23 @@ function omnisend_rebuild_cart() {
 		if ( isset( $product['wooco_ids'] ) ) {
 			$_REQUEST['wooco_ids'] = $product['wooco_ids'];
 		}
+
+		$cart_item_data = array();
+
+		foreach ( $product as $key => $value ) {
+			if ( ! in_array( $key, array( 'product_id', 'quantity', 'variation_id', 'variation' ), true ) ) {
+				$cart_item_data[ $key ] = $value;
+			}
+		}
+
+		$cart_item_data = apply_filters( 'omnisend_recover_cart_item_data', $cart_item_data, $product );
+
 		$woocommerce->cart->add_to_cart(
 			$product['product_id'],
 			$product['quantity'],
 			$product['variation_id'],
-			$product['variation']
+			$product['variation'],
+			$cart_item_data,
 		);
 	}
 

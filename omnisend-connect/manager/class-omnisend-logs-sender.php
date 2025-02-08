@@ -32,8 +32,14 @@ class Omnisend_Logs_Sender {
 		$response_code    = intval( wp_remote_retrieve_response_code( $response ) );
 		$response_success = $response_code >= 200 && $response_code < 300;
 
-		if ( is_wp_error( $response ) || ! $response_success ) {
+		if ( is_wp_error( $response ) ) {
 			Omnisend_Logger::debug( $response->get_error_message() );
+
+			return false;
+		}
+
+		if ( ! $response_success ) {
+			Omnisend_Logger::debug( 'Request failed with response code: ' . $response_code );
 
 			return false;
 		}

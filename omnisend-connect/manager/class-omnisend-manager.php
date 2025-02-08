@@ -52,6 +52,8 @@ class Omnisend_Manager {
 			return;
 		}
 
+		$contact_array = apply_filters( 'omnisend_contact_data', $contact_array, $user );
+
 		$api_url     = OMNISEND_API_URL . '/v3/contacts';
 		$curl_result = Omnisend_Helper::omnisend_api( $api_url, self::VERB_POST, $contact_array );
 		if ( $curl_result['code'] >= 200 && $curl_result['code'] < 300 ) {

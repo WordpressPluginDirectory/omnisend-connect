@@ -62,16 +62,16 @@ class Omnisend_Cart_Event {
 	private static function build_event_props( $cart, $added_item ) {
 		$items = array();
 
-		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
-			$line_item = array(
-				'product_id'   => $cart_item['product_id'],
-				'variation_id' => $cart_item['variation_id'],
-				'quantity'     => $cart_item['quantity'],
-				'link'         => $cart_item['data']->get_permalink( $cart_item ),
-				'attributes'   => $cart_item['variation'],
+		foreach ( $cart->get_cart() as $cart_item_key => $woo_cart_item ) {
+			$omnisend_cart_item = array(
+				'product_id'   => $woo_cart_item['product_id'],
+				'variation_id' => $woo_cart_item['variation_id'],
+				'quantity'     => $woo_cart_item['quantity'],
+				'link'         => $woo_cart_item['data']->get_permalink( $woo_cart_item ),
+				'attributes'   => $woo_cart_item['variation'],
 			);
-			$line_item = apply_filters( 'omnisend_cart_line_item', $line_item, $cart_item );
-			array_push( $items, $line_item );
+			$omnisend_cart_item = apply_filters( 'omnisend_cart_line_item', $omnisend_cart_item, $woo_cart_item );
+			array_push( $items, $omnisend_cart_item );
 		}
 
 		$cart->calculate_totals();
@@ -86,7 +86,7 @@ class Omnisend_Cart_Event {
 			),
 			'omnisend_cart_id' => Omnisend_Cart::get_or_set_cart_id(),
 			'item_count'       => $cart->get_cart_contents_count(),
-			'checkout_url'     => self::build_checkout_url( $cart ),
+			'checkout_url'     => self::build_checkout_url( $items ),
 		);
 
 		if ( $added_item ) {
@@ -96,21 +96,23 @@ class Omnisend_Cart_Event {
 		return $event_props;
 	}
 
-	private static function build_checkout_url( $cart ) {
-		$products = array();
+	private static function build_checkout_url( $items ) {
+		$line_items_to_recover = array();
 
-		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
-			$product = array(
+		foreach ( $items as $cart_item_key => $cart_item ) {
+			$line_item_to_recover = array(
 				'product_id'   => $cart_item['product_id'],
 				'quantity'     => $cart_item['quantity'],
 				'variation_id' => $cart_item['variation_id'],
-				'variation'    => $cart_item['variation'] ?? array(),
+				'variation'    => $cart_item['attributes'] ?? array(),
 			);
 
-			array_push( $products, $product );
+			$line_item_to_recover = apply_filters( 'omnisend_cart_checkout_url_item', $line_item_to_recover, $cart_item );
+
+			array_push( $line_items_to_recover, $line_item_to_recover );
 		}
 
-		$cart_to_recover = array( 'products' => $products );
+		$cart_to_recover = array( 'products' => $line_items_to_recover );
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 		$base64_encoded = base64_encode( wp_json_encode( $cart_to_recover ) );
 

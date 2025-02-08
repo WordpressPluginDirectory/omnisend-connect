@@ -180,10 +180,11 @@ class Omnisend_Manager_Assistant {
 		$args['items']       = array();
 		$skipped_contact_ids = array();
 		foreach ( $users as $user ) {
-			$prepared_contact = Omnisend_Contact::create( $user );
-			if ( $prepared_contact ) {
-				$prepared_contact = Omnisend_Helper::clean_model_from_empty_fields( $prepared_contact );
-				$args['items'][]  = $prepared_contact;
+			$contact_object = Omnisend_Contact::create( $user );
+			if ( $contact_object ) {
+				$contact_array   = Omnisend_Helper::clean_model_from_empty_fields( $contact_object );
+				$contact_array   = apply_filters( 'omnisend_contact_data', $contact_array, $user );
+				$args['items'][] = $contact_array;
 			} else {
 				$skipped_contact_ids[] = $user->ID;
 			}

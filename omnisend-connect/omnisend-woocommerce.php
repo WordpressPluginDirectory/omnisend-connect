@@ -3,7 +3,7 @@
  * Plugin Name: Omnisend for WooCommerce
  * Plugin URI: https://www.omnisend.com
  * Description: 125,000+ ecommerce stores use Omnisend to sell more stuff to more people. Send newsletters & SMS and build email lists with popups.
- * Version: 1.15.29
+ * Version: 1.15.31
  * Author: Omnisend
  * Author URI: https://www.omnisend.com
  * Developer: Omnisend
@@ -28,7 +28,7 @@ if ( ! defined( 'OMNISEND_WOO_PLUGIN_FILE' ) ) {
 define( 'OMNISEND_APP_DOMAIN', 'app.omnisend.com' );
 define( 'OMNISEND_APP_URL', 'https://app.omnisend.com' );
 define( 'OMNISEND_API_URL', 'https://api.omnisend.com' );
-define( 'OMNISEND_SNIPPET_URL', 'https://omnisnippet1.com/inshop/launcher-v2.js' );
+define( 'OMNISEND_SNIPPET_URL', 'https://omnisnippet1.com/platforms/embed.js' );
 define( 'OMNISEND_DISCOUNTS_KB_ARTICLE_URL', 'https://support.omnisend.com/en/articles/5846981-discount-content-block-for-woocommerce' );
 define( 'OMNISEND_CALLBACK_URL', OMNISEND_APP_URL . '/REST/woocommerce/keys' );
 define( 'OMNISEND_LOGS_KEY', 'qhyXzQsK7hnynKH0C6qVyVqCJWvWt8atAHB' );

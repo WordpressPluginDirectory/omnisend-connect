@@ -202,19 +202,22 @@ function omnisend_add_snippet_script() {
 		if ( $omnisend_account_id !== null ) {
 			Omnisend_Logger::hook();
 
+			$omnisend_plugin_version = Omnisend_Helper::omnisend_plugin_version();
+
 			$file_name = 'embed.js';
 			$file_path = OMNISEND_SNIPPET_URL . '?brandID=' . $omnisend_account_id . '&platform=woocommerce';
 
-			wp_register_script( $file_name, $file_path, array(), '1.0.0', true );
+			wp_register_script( $file_name, $file_path, array(), $omnisend_plugin_version, true );
 			wp_localize_script(
 				$file_name,
 				'omnisend_snippet_vars',
 				array(
-					'brand_id' => $omnisend_account_id,
-					'platform' => 'woocommerce',
+					'brand_id'       => $omnisend_account_id,
+					'platform'       => 'woocommerce',
+					'plugin_version' => $omnisend_plugin_version,
 				)
 			);
-			wp_enqueue_script( $file_name, $file_path, array(), '1.0.0', true );
+			wp_enqueue_script( $file_name, $file_path, array(), $omnisend_plugin_version, true );
 		}
 	}
 }

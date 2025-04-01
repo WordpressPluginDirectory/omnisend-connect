@@ -203,9 +203,10 @@ function omnisend_add_snippet_script() {
 			Omnisend_Logger::hook();
 
 			$omnisend_plugin_version = Omnisend_Helper::omnisend_plugin_version();
+			$formatted_date          = gmdate( 'Y-m-d\\TH' );
 
-			$file_name = 'embed.js';
-			$file_path = OMNISEND_SNIPPET_URL . '?brandID=' . $omnisend_account_id . '&platform=woocommerce';
+			$file_name = 'woocommerce.js';
+			$file_path = OMNISEND_SNIPPET_URL . '?brandID=' . $omnisend_account_id . '&v=' . $formatted_date;
 
 			wp_register_script( $file_name, $file_path, array(), $omnisend_plugin_version, true );
 			wp_localize_script(
@@ -213,7 +214,6 @@ function omnisend_add_snippet_script() {
 				'omnisend_snippet_vars',
 				array(
 					'brand_id'       => $omnisend_account_id,
-					'platform'       => 'woocommerce',
 					'plugin_version' => $omnisend_plugin_version,
 				)
 			);

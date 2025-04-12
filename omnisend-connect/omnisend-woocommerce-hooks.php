@@ -215,6 +215,7 @@ function omnisend_add_snippet_script() {
 				array(
 					'brand_id'       => $omnisend_account_id,
 					'plugin_version' => $omnisend_plugin_version,
+					'home_url'       => home_url(),
 				)
 			);
 			wp_enqueue_script( $file_name, $file_path, array(), $omnisend_plugin_version, true );

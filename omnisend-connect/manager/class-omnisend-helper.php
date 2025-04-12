@@ -180,8 +180,9 @@ class Omnisend_Helper {
 	}
 
 	public static function is_woocommerce_plugin_activated() {
-		return in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
+		return class_exists( 'WooCommerce' ) && function_exists( 'wc' );
 	}
+
 	public static function is_omnisend_connected() {
 		return (bool) get_option( 'omnisend_api_key', null );
 	}
@@ -197,10 +198,9 @@ class Omnisend_Helper {
 		$api_keys           = Omnisend_Install::get_woo_api_keys();
 
 		foreach ( $api_keys as $api_key ) {
-			$user = get_userdata( $api_key->user_id );
-			if ( in_array( self::ADMINISTRATOR_USER_ROLE, $user->roles ) ) {
-				$api_access_granted = true;
-			} else {
+			$api_access_granted = self::check_user_role_for_oauth_access( $api_key, get_current_blog_id() );
+			if ( ! $api_access_granted ) {
+				Omnisend_Logger::info( 'Removing WooCommerce API key ' . $api_key->key_id . ' because user ' . $api_key->user_id . ' is not an administrator' );
 				Omnisend_Install::remove_woo_api_key( $api_key->key_id );
 			}
 		}
@@ -260,5 +260,35 @@ class Omnisend_Helper {
 
 	public static function get_domain( $url ) {
 		return wp_parse_url( $url, PHP_URL_HOST );
+	}
+
+	private static function check_user_role_for_oauth_access( $api_key, $subsite_id = null ) {
+		$user = get_userdata( $api_key->user_id );
+		if ( ! $user ) {
+			return false;
+		}
+
+		// Check if the user is a Super Admin (network-wide admin).
+		if ( is_super_admin( $api_key->user_id ) ) {
+			return true;
+		}
+
+		$api_access_granted = false;
+
+		// If a specific subsite ID is provided, switch context to that subsite.
+		if ( $subsite_id ) {
+			switch_to_blog( $subsite_id );
+			$user = get_userdata( $api_key->user_id ); // Reload user data within subsite context.
+
+			if ( in_array( self::ADMINISTRATOR_USER_ROLE, (array) $user->roles ) ) {
+				$api_access_granted = true;
+			}
+
+			restore_current_blog(); // Restore original site context.
+		} elseif ( in_array( self::ADMINISTRATOR_USER_ROLE, (array) $user->roles ) ) {
+			$api_access_granted = true;
+		}
+
+		return $api_access_granted;
 	}
 }

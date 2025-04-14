@@ -3,9 +3,9 @@ Plugin Name: Email Marketing for WooCommerce by Omnisend
 Contributors: Omnisend
 Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.1
-Stable tag: 1.16.0
+Stable tag: 1.16.1
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Email Marketing, Newsletter, Email Automation, Forms, Pop Up, SMS, Abandoned Car
 
 https://www.youtube.com/watch?v=inmmjXZlz8o
 
-Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 125,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and effortlessly grow your business. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results — all from within your WordPress dashboard. Best of all, it’s completely free to get started!
+Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 125,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and effortlessly grow your business. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results — all from within your WordPress dashboard. Best of all, it's completely free to get started!
 
 Some of the features of Omnisend include:
 
@@ -31,11 +31,11 @@ Once your email marketing campaigns are sent, reports with stats like open rate,
 
 * Build beautiful email and SMS campaigns using our intuitive drag-and-drop editor
 * Use dynamic content to personalize the experience for your customers
-* Automatically import your store’s branding (logos, colors and fonts) into your email marketing messages & popups to save even more time
+* Automatically import your store's branding (logos, colors and fonts) into your email marketing messages & popups to save even more time
 * Send or schedule emails and SMS messages at a future date and time, and track your results in real-time
 * Use customer data to segment and target your email marketing campaigns to the right audience at the right time — create segments based on behavior, demographics, purchase history, and more
 * Set up automated campaigns that trigger based on customer behavior: Welcome new subscribers, recover abandoned carts, upsell and cross-sell products, and more
-* Use Omnisend’s product recommendation feature to automatically suggest products that your customers are most likely to buy
+* Use Omnisend's product recommendation feature to automatically suggest products that your customers are most likely to buy
 * Test different subject lines, content, and designs to see what works best for your audience
 * Get insights into your campaigns with detailed reporting and analytics, and see how many people opened, clicked, and converted from your emails
 
@@ -45,7 +45,7 @@ Once your email marketing campaigns are sent, reports with stats like open rate,
 * Automate your email marketing strategy from welcome emails to abandoned cart reminders and win-back campaigns
 * Trigger automation workflows based on user actions like sign-up, form submission, product purchase, or even inactivity
 * Measure workflow metrics in every step and find where you can do better
-* Use Omnisend’s powerful automation workflows to create seamless multi-channel experiences — send emails, SMS, push notifications, and more in a single workflow
+* Use Omnisend's powerful automation workflows to create seamless multi-channel experiences — send emails, SMS, push notifications, and more in a single workflow
 * Automatically sync your email and SMS audiences with Facebook Custom Audiences and Google Ads
 * Use our visual workflow builder to create complex automation workflows that drive conversions and revenue, and trigger campaigns based on behavior, demographics, purchase history, and more
 * Use dynamic content to personalize your email marketing campaigns based on customer data, show different product recommendations, pricing, and messaging to different segments
@@ -71,7 +71,7 @@ Once your email marketing campaigns are sent, reports with stats like open rate,
 **🎉 Ecommerce integrations**
 
 * Integrations: Omnisend integrates with all major ecommerce tools, including Gorgias, Yotpo, Zapier, ShipStation, and 100s more
-* Product recommendations: Use Omnisend’s product recommendation feature to automatically suggest products that your customers are most likely to buy
+* Product recommendations: Use Omnisend's product recommendation feature to automatically suggest products that your customers are most likely to buy
 * Facebook and Google Ads sync: Automatically sync your contact data with Facebook ads or Google Ads to create targeted lookalike audiences
 * Advanced ecommerce reporting: Get insights into your ecommerce performance with detailed reporting and analytics to see how much revenue you generated, what products are selling, and more
 
@@ -84,25 +84,25 @@ Once your email marketing campaigns are sent, reports with stats like open rate,
 
 = 🛡️ FULLY GDPR READY =
 
-Omnisend is a self-hosted WordPress plugin. You own your data, and it is protected with the latest security standards. Our platform is fully GDPR compliant, so you can be confident that your customers’ data is being collected and used in a responsible way.
+Omnisend is a self-hosted WordPress plugin. You own your data, and it is protected with the latest security standards. Our platform is fully GDPR compliant, so you can be confident that your customers' data is being collected and used in a responsible way.
 
 = DRIVE ENGAGEMENT WITH OMNISEND =
 
-Omnisend is an all-in-one email and SMS marketing automation platform designed to help ecommerce businesses drive engagement and increase revenue. Built by a team of experienced developers with a passion for ecommerce, Omnisend has been a top choice for merchants across the globe for over 10 years. Omnisend started in 2014 as an email marketing platform called Soundest. From day one, we made it our priority to put ecommerce marketers at the center of every decision we’d make — and that hasn’t changed at all.
+Omnisend is an all-in-one email and SMS marketing automation platform designed to help ecommerce businesses drive engagement and increase revenue. Built by a team of experienced developers with a passion for ecommerce, Omnisend has been a top choice for merchants across the globe for over 10 years. Omnisend started in 2014 as an email marketing platform called Soundest. From day one, we made it our priority to put ecommerce marketers at the center of every decision we'd make — and that hasn't changed at all.
 
-Join thousands of happy customers and start driving engagement with Omnisend today. Here’s what our customers are saying about us:
-
-★★★★★
-> “Very great functionality that makes my WooCommerce business grow rapidly. The support is outstanding, and they always do their best to solve everything I need.”
+Join thousands of happy customers and start driving engagement with Omnisend today. Here's what our customers are saying about us:
 
 ★★★★★
-> “Omnisend is excellent for a very beginner. It’s so easy to use but if you do not understand something, customer service is always ready to help. There is a chat icon on every page, and they answer just some minutes after the question. I feel very encouraged even if is my very first experience with such a service.”
+> "Very great functionality that makes my WooCommerce business grow rapidly. The support is outstanding, and they always do their best to solve everything I need."
 
 ★★★★★
-> “I manage multiple stores with different providers, mostly were mailchimp, well after trying omnisend (especially with big data stores) I decided to switch multiple big stores (over 100k orders); the decision was easy to make as the sync process on mailchimp, it took a week! Here it took 3 hours! That is just the biggest leap for me as mailchimp would randomly disconnect the store or cancel automations without notice (multiple accounts). Using omnisend on almost 10 stores for 4 months and everything is great! The interface, automations and support are very good, I strongly recommend them for stores who need data statistics and segmentation (grouping) on their audience (lists), who need fast automations, great, reliable and fast support. P.S. Their API has responses and it’s pretty well documented, I’ve made a few implementations and everything looks great!”
+> "Omnisend is excellent for a very beginner. It's so easy to use but if you do not understand something, customer service is always ready to help. There is a chat icon on every page, and they answer just some minutes after the question. I feel very encouraged even if is my very first experience with such a service."
 
 ★★★★★
-> “We have been using Omnisend for some time now and their interface is easy and intuitive and integrating with our other systems and apps has been seamless. If ever we have a question they are quick to answer and are always helpful. A big shout out to both Agustine and Stefan they are a credit to your team 🙂”
+> "I manage multiple stores with different providers, mostly were mailchimp, well after trying omnisend (especially with big data stores) I decided to switch multiple big stores (over 100k orders); the decision was easy to make as the sync process on mailchimp, it took a week! Here it took 3 hours! That is just the biggest leap for me as mailchimp would randomly disconnect the store or cancel automations without notice (multiple accounts). Using omnisend on almost 10 stores for 4 months and everything is great! The interface, automations and support are very good, I strongly recommend them for stores who need data statistics and segmentation (grouping) on their audience (lists), who need fast automations, great, reliable and fast support. P.S. Their API has responses and it's pretty well documented, I've made a few implementations and everything looks great!"
+
+★★★★★
+> "We have been using Omnisend for some time now and their interface is easy and intuitive and integrating with our other systems and apps has been seamless. If ever we have a question they are quick to answer and are always helpful. A big shout out to both Agustine and Stefan they are a credit to your team 🙂"
 
 WPBeginner talks about us in this video:
 
@@ -122,23 +122,23 @@ https://www.youtube.com/watch?v=CrXiK8XuDm0
 
 = NATIVE WOOCOMMERCE INTEGRATION: =
 
-Omnisend’s email marketing & SMS plugin seamlessly integrates with WooCommerce to help you collect leads, create targeted segments, send emails, and grow your email and SMS list.
+Omnisend's email marketing & SMS plugin seamlessly integrates with WooCommerce to help you collect leads, create targeted segments, send emails, and grow your email and SMS list.
 
 = FORM INTEGRATION: =
 
-Add Omnisend’s signup forms to your WordPress site with a few clicks and automatically add new subscribers to your Omnisend account. You can also segment your email marketing & SMS subscribers based on the form they filled out or the page they signed up from.
+Add Omnisend's signup forms to your WordPress site with a few clicks and automatically add new subscribers to your Omnisend account. You can also segment your email marketing & SMS subscribers based on the form they filled out or the page they signed up from.
 
 = WOO COMMERCE INTEGRATION: =
 
-Omnisend’s plugin is the perfect tool for WooCommerce users. You can segment your email marketing & SMS contacts based on their purchase history, including items purchased, total spend, and more. You can also send targeted campaigns to customers based on their purchase history, such as abandoned cart reminders and post-purchase follow-ups.
+Omnisend's plugin is the perfect tool for WooCommerce users. You can segment your email marketing & SMS contacts based on their purchase history, including items purchased, total spend, and more. You can also send targeted campaigns to customers based on their purchase history, such as abandoned cart reminders and post-purchase follow-ups.
 
 = SMS MARKETING: =
 
-With Omnisend’s SMS integration, you can effortlessly send targeted SMS campaigns to your customers. You can segment customers based on their purchase history, website activity, and more.
+With Omnisend's SMS integration, you can effortlessly send targeted SMS campaigns to your customers. You can segment customers based on their purchase history, website activity, and more.
 
 = GREAT USER EXPERIENCE: =
 
-Omnisend’s plugin is intuitive, with a user-friendly interface that lets you create and manage email marketing & SMS campaigns directly from your WordPress dashboard. With Omnisend’s plugin, you can take your email & SMS marketing to the next level.
+Omnisend's plugin is intuitive, with a user-friendly interface that lets you create and manage email marketing & SMS campaigns directly from your WordPress dashboard. With Omnisend's plugin, you can take your email & SMS marketing to the next level.
 
 Ads integrations:
 Drive more traffic to your store with improved targeting and reporting.
@@ -182,7 +182,7 @@ Show your customers you care about them by following up on their reviews.
 * Vitals: All-in-One Marketing
 
 Loyalty & Rewards integrations:
-Discover apps that’ll help you turn one-time customers into repeat customers.
+Discover apps that'll help you turn one-time customers into repeat customers.
 
 * Smile
 * Loyalty Lion
@@ -258,7 +258,7 @@ Apps to help you keep your brand top of mind.
 * Tidio ‑ Live Chat & Chatbots
 
 Back-in-stock & wishlist integrations:
-Build workflows based on back-in-stock items and your contact’s wishlists.
+Build workflows based on back-in-stock items and your contact's wishlists.
 
 * Swym
 * Back In Stock – Restock Alerts
@@ -267,7 +267,7 @@ Build workflows based on back-in-stock items and your contact’s wishlists.
 
 = SEAMLESS MIGRATION FROM MAILCHIMP, KLAVIYO, & MORE =
 
-Omnisend has made migration from other ESPs or CRMs — like [Mailchimp](https://appmarket.omnisend.com/app-details/610b9fc16ea35f00145508fc) and [Klaviyo](https://appmarket.omnisend.com/app-details/637f7872947fea001b601a78) — a seamless experience, thanks to our dedicated migration tools. That’s right, just a few clicks and a few minutes, and you’ll get your data imported into Omnisend. Switch now from Klaviyo, Mailchimp, ConvertKit, MailerLite, Drip and Active Campaign in just minutes.
+Omnisend has made migration from other ESPs or CRMs — like [Mailchimp](https://appmarket.omnisend.com/app-details/610b9fc16ea35f00145508fc) and [Klaviyo](https://appmarket.omnisend.com/app-details/637f7872947fea001b601a78) — a seamless experience, thanks to our dedicated migration tools. That's right, just a few clicks and a few minutes, and you'll get your data imported into Omnisend. Switch now from Klaviyo, Mailchimp, ConvertKit, MailerLite, Drip and Active Campaign in just minutes.
 
 == FAQ ==
 
@@ -284,7 +284,7 @@ Here are a few simple steps to start selling more with Omnisend:
 *   Omnisend account
 
 = How can I reach Omnisend support? =
-We give you stellar support and helpful advice anytime you need it. Check out our [Knowledge Base](https://support.omnisend.com/), shoot us an email support@omnisend.com, or just write us a direct message on our platform. We’re available 24/7 for all users—both on Free and paid plans.
+We give you stellar support and helpful advice anytime you need it. Check out our [Knowledge Base](https://support.omnisend.com/), shoot us an email support@omnisend.com, or just write us a direct message on our platform. We're available 24/7 for all users—both on Free and paid plans.
 
 = Where can I find Omnisend Terms? =
 Read Omnisend [Terms of Use](https://www.omnisend.com/terms)
@@ -306,9 +306,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 1.16.1 =
+
+* Updated supported WordPress version to 6.8.
+
 = 1.16.0 =
 
-* Added logic to support multisite setup
+* Added logic to support multisite setup.
 
 = 1.15.36 =
 
@@ -320,11 +324,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 1.15.34 =
 
-* Fix php errors
+* Fix php errors.
 
 = 1.15.33 =
 
-* Update description and change WooCommerce logo to new
+* Update description and change WooCommerce logo to new.
 
 = 1.15.32 =
 

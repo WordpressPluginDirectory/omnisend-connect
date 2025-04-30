@@ -52,8 +52,12 @@ class Omnisend_Product {
 		$available_variations = array();
 
 		foreach ( $wc_product->get_children() as $child_id ) {
-			$variation              = wc_get_product( $child_id );
-			$available_variations[] = $wc_product->get_available_variation( $variation );
+			$variation_product = wc_get_product( $child_id );
+
+			$variation                    = $wc_product->get_available_variation( $variation_product );
+			$variation['variation_title'] = $variation_product->get_name();
+
+			$available_variations[] = $variation;
 		}
 		$available_variations = array_filter( $available_variations );
 
@@ -166,7 +170,7 @@ class Omnisend_Product {
 				$variant = array();
 
 				$variant['variantID'] = '' . $variation['variation_id'];
-				$variant['title']     = $this->title;
+				$variant['title']     = $variation['variation_title'];
 				if ( $variation['sku'] != '' ) {
 					$variant['sku'] = $variation['sku'];
 				}

@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
 Tested up to: 6.8
 Requires PHP: 7.1
-Stable tag: 1.16.3
+Stable tag: 1.16.4
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -305,6 +305,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 9. Convert more visitors with highly-targeted landing pages
 
 == Changelog ==
+
+= 1.16.4 =
+
+* Changed webhook doomain.
 
 = 1.16.3 =
 

@@ -110,7 +110,7 @@ class Omnisend_Install {
 				continue;
 			}
 
-			$is_omnisend_delivery_url = false !== strpos( $webhook->get_delivery_url(), 'webhooks-woocommerce.omnisend' );
+			$is_omnisend_delivery_url = false !== strpos( $webhook->get_delivery_url(), 'woocommerce.webhooks.omnisend' );
 			$is_omnisend_name         = false !== strpos( $webhook->get_name(), 'omnisend::' );
 			if ( $is_omnisend_delivery_url && $is_omnisend_name ) {
 				$webhook_data_store->delete( $webhook );

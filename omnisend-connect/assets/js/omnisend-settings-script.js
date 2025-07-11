@@ -19,12 +19,34 @@ jQuery(document).ready(function ($) {
         );
     });
 
+    handleClick('#ajax__checkout_sms_opt_in_status', function (e) {
+        post(
+            {
+                action: 'omnisend_update_plugin_setting',
+                setting_name: 'checkout_sms_opt_in_status',
+                setting_value: e.target.checked ? 'enabled' : 'disabled'
+            },
+            e.target
+        );
+    });
+
     handleClick('#ajax__checkout_opt_in_text_submit', function (e) {
         post(
             {
                 action: 'omnisend_update_plugin_setting',
                 setting_name: 'checkout_opt_in_text',
                 setting_value: document.querySelector('#ajax__checkout_opt_in_text').value
+            },
+            e.target
+        );
+    });
+
+    handleClick('#ajax__checkout_sms_opt_in_text_submit', function (e) {
+        post(
+            {
+                action: 'omnisend_update_plugin_setting',
+                setting_name: 'checkout_sms_opt_in_text',
+                setting_value: document.querySelector('#ajax__checkout_sms_opt_in_text').value
             },
             e.target
         );

@@ -26,43 +26,55 @@ class Omnisend_Checkout_Block_Extend_Woo_Core {
 	}
 
 	private static function update_contact_status( \WC_Order $order, \WP_REST_Request $request ) {
+		$sms_consent   = $request['extensions'][ OMNISEND_CHECKOUT_PLUGIN_NAME ]['optin-sms'];
 		$email_consent = $request['extensions'][ OMNISEND_CHECKOUT_PLUGIN_NAME ]['optin'];
-		if ( ! $email_consent ) {
+
+		if ( ! $sms_consent && ! $email_consent ) {
 			return; // consent was not provided.
 		}
 
-		$order->add_meta_data( 'marketing_opt_in_consent', 'checkout', true );
+		if ( $sms_consent ) {
+			$order->add_meta_data( 'marketing_sms_opt_in_consent', 'checkout', true );
+		}
+
+		if ( $email_consent ) {
+			$order->add_meta_data( 'marketing_opt_in_consent', 'checkout', true );
+		}
+
 		$order->save();
 		$status_date = gmdate( DATE_ATOM, $order->get_date_created()->getTimestamp() ?? time() );
 		$identifiers = array();
 
+		$phone = $order->get_billing_phone();
 		$email = $order->get_billing_email();
+
 		if ( $email != '' ) {
 			$email_identifier = array(
 				'type'     => 'email',
 				'id'       => $email,
 				'channels' => array(
 					'email' => array(
-						'status'     => 'subscribed',
+						'status'     => $email_consent ? 'subscribed' : 'nonSubscribed',
 						'statusDate' => $status_date,
 					),
 				),
 			);
+
 			array_push( $identifiers, $email_identifier );
 		}
 
-		$phone = $order->get_billing_phone();
 		if ( $phone != '' ) {
 			$phone_identifier = array(
 				'type'     => 'phone',
 				'id'       => $phone,
 				'channels' => array(
 					'sms' => array(
-						'status'     => 'nonSubscribed',
+						'status'     => $sms_consent ? 'subscribed' : 'nonSubscribed',
 						'statusDate' => $status_date,
 					),
 				),
 			);
+
 			array_push( $identifiers, $phone_identifier );
 		}
 

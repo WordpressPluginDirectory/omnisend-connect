@@ -58,8 +58,14 @@ function omnisend_update_plugin_setting() {
 		case 'checkout_opt_in_status':
 			Omnisend_Settings::set_checkout_opt_in_status( $setting_value, $setting_update_source );
 			break;
+		case 'checkout_sms_opt_in_status':
+			Omnisend_Settings::set_checkout_sms_opt_in_status( $setting_value, $setting_update_source );
+			break;
 		case 'checkout_opt_in_text':
 			Omnisend_Settings::set_checkout_opt_in_text( $setting_value, $setting_update_source );
+			break;
+		case 'checkout_sms_opt_in_text':
+			Omnisend_Settings::set_checkout_sms_opt_in_text( $setting_value, $setting_update_source );
 			break;
 		case 'checkout_opt_in_preselected_status':
 			Omnisend_Settings::set_checkout_opt_in_preselected_status( $setting_value, $setting_update_source );

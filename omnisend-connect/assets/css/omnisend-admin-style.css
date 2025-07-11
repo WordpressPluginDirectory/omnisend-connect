@@ -722,3 +722,7 @@ a.omnisend-primary-button {
 	font-size: 16px;
 	font-weight: 500;
 }
+
+.omnisend-preselect-container {
+	margin-bottom: 15px;
+}

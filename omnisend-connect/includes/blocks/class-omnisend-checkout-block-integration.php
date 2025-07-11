@@ -97,9 +97,15 @@ class Omnisend_Checkout_Block_Integration implements IntegrationInterface {
 	 */
 	public function get_script_data() {
 		$data = array(
-			'optInText'        => Omnisend_Settings::get_checkout_opt_in_text(),
-			'optInEnabled'     => Omnisend_Settings::get_checkout_opt_in_status() === Omnisend_Settings::STATUS_ENABLED,
-			'optInPreselected' => Omnisend_Settings::get_checkout_opt_in_preselected_status() === Omnisend_Settings::STATUS_ENABLED,
+			'newsletter' => array(
+				'optInText'        => Omnisend_Settings::get_checkout_opt_in_text(),
+				'optInEnabled'     => Omnisend_Settings::get_checkout_opt_in_status() === Omnisend_Settings::STATUS_ENABLED,
+				'optInPreselected' => Omnisend_Settings::get_checkout_opt_in_preselected_status() === Omnisend_Settings::STATUS_ENABLED,
+			),
+			'sms'        => array(
+				'optInText'    => Omnisend_Settings::get_checkout_sms_opt_in_text(),
+				'optInEnabled' => Omnisend_Settings::get_checkout_sms_opt_in_status() === Omnisend_Settings::STATUS_ENABLED,
+			),
 		);
 
 		return $data;

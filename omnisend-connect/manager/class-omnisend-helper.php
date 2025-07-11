@@ -262,7 +262,7 @@ class Omnisend_Helper {
 		return wp_parse_url( $url, PHP_URL_HOST );
 	}
 
-	private static function check_user_role_for_oauth_access( $api_key, $subsite_id = null ) {
+	private static function check_user_role_for_oauth_access( $api_key, $subsite_id ) {
 		$user = get_userdata( $api_key->user_id );
 		if ( ! $user ) {
 			return false;
@@ -276,7 +276,7 @@ class Omnisend_Helper {
 		$api_access_granted = false;
 
 		// If a specific subsite ID is provided, switch context to that subsite.
-		if ( $subsite_id ) {
+		if ( is_multisite() ) {
 			switch_to_blog( $subsite_id );
 			$user = get_userdata( $api_key->user_id ); // Reload user data within subsite context.
 

@@ -3,34 +3,34 @@ import { CheckboxControl } from '@woocommerce/blocks-checkout';
 import { getSetting } from '@woocommerce/settings';
 import './styles.css';
 
-const { newsletter } = getSetting( 'omnisend_consent_data', '' );
+const { sms } = getSetting( 'omnisend_consent_data', '' );
 
-const Block = ( { checkoutExtensionData } ) => {
-	const [ checked, setChecked ] = useState( newsletter.optInPreselected );
+const BlockSms = ( { checkoutExtensionData } ) => {
+	const [ checked, setChecked ] = useState( false );
 	const { setExtensionData } = checkoutExtensionData;
 
 	useEffect( () => {
-		setExtensionData( 'omnisend_consent', 'optin', checked );
+		setExtensionData( 'omnisend_consent', 'optin-sms', checked );
 	}, [
 		checked,
 		setExtensionData,
 	] );
 
-	if (!newsletter.optInEnabled) {
+	if (!sms.optInEnabled) {
 		return null;
 	}
 
 	return (
 		<div id="omnisend-subscribe-block">
 			<CheckboxControl
-				id="subscribe-to-newsletter"
+				id="subscribe-to-sms"
 				checked={ checked }
 				onChange={ setChecked }
 			>
-				{ newsletter.optInText }
+				{ sms.optInText }
 			</CheckboxControl>
 		</div>
 	);
 };
 
-export default Block;
+export default BlockSms;

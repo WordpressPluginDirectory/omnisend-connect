@@ -62,7 +62,7 @@ class Omnisend_Checkout_Block_Extend_Store_Endpoint {
 	 */
 	public static function extend_checkout_schema() {
 		return array(
-			'optin' => array(
+			'optin'     => array(
 				'description' => 'Subscribed to newsletter',
 				'type'        => 'bool',
 				'context'     => array( 'view', 'edit' ),
@@ -78,6 +78,28 @@ class Omnisend_Checkout_Block_Extend_Store_Endpoint {
 						if ( is_bool( $value ) ) {
 							return $value;
 						}
+						return false;
+					},
+				),
+			),
+			'optin-sms' => array(
+				'description' => 'Subscribed to sms',
+				'type'        => 'bool',
+				'context'     => array( 'view', 'edit' ),
+				'readonly'    => true,
+				'arg_options' => array(
+					'validate_callback' => function ( $value ) {
+						if ( ! is_null( $value ) && ! is_bool( $value ) ) {
+							return new WP_Error( 'api-error', 'value of type ' . gettype( $value ) . 'was posted to the sms optin callback' );
+						}
+
+						return true;
+					},
+					'sanitize_callback' => function ( $value ) {
+						if ( is_bool( $value ) ) {
+							return $value;
+						}
+
 						return false;
 					},
 				),

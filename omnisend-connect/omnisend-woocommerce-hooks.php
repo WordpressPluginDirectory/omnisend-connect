@@ -324,88 +324,126 @@ function omnisend_checkbox_custom_checkout_field( $checkout ) {
 		return;
 	}
 
-	woocommerce_form_field(
-		'omnisend_newsletter_checkbox',
-		array(
-			'type'     => 'checkbox',
-			'class'    => array( 'omnisend_newsletter_checkbox_field' ),
-			'label'    => Omnisend_Settings::get_checkout_opt_in_text(),
-			'value'    => true,
-			'default'  => Omnisend_Settings::get_checkout_opt_in_preselected_status() === Omnisend_Settings::STATUS_ENABLED ? 1 : 0,
-			'required' => false,
-		),
-		$checkout->get_value( 'omnisend_newsletter_checkbox' )
-	);
+	$newsletter_enabled = Omnisend_Settings::get_checkout_opt_in_status() === Omnisend_Settings::STATUS_ENABLED && Omnisend_Settings::get_checkout_opt_in_text();
+	$sms_enabled        = Omnisend_Settings::get_checkout_sms_opt_in_status() === Omnisend_Settings::STATUS_ENABLED && Omnisend_Settings::get_checkout_sms_opt_in_text();
+
+	if ( $newsletter_enabled ) {
+		woocommerce_form_field(
+			'omnisend_newsletter_checkbox',
+			array(
+				'type'     => 'checkbox',
+				'class'    => array( 'omnisend_newsletter_checkbox_field' ),
+				'label'    => Omnisend_Settings::get_checkout_opt_in_text(),
+				'value'    => true,
+				'default'  => Omnisend_Settings::get_checkout_opt_in_preselected_status() === Omnisend_Settings::STATUS_ENABLED ? 1 : 0,
+				'required' => false,
+			),
+			$checkout->get_value( 'omnisend_newsletter_checkbox' )
+		);
+	}
+
+	if ( $sms_enabled ) {
+		woocommerce_form_field(
+			'omnisend_sms_checkbox',
+			array(
+				'type'     => 'checkbox',
+				'class'    => array( 'omnisend_sms_checkbox_field' ),
+				'label'    => Omnisend_Settings::get_checkout_sms_opt_in_text(),
+				'value'    => true,
+				'default'  => 0,
+				'required' => false,
+			),
+			$checkout->get_value( 'omnisend_sms_checkbox' )
+		);
+	}
 }
 
 function omnisend_update_contact_status( $order_id ) {
 	Omnisend_Logger::hook();
+
 	// Nonce verification is not required here - we listen for woocommerce hook, where woocommerce verifies nonce.
-	// phpcs:ignore WordPress.Security.NonceVerification
-	if ( isset( $_POST['omnisend_newsletter_checkbox'] ) && sanitize_text_field( wp_unslash( $_POST['omnisend_newsletter_checkbox'] ) ) ) {
-		$order = wc_get_order( $order_id );
-		$order->add_meta_data( 'marketing_opt_in_consent', 'checkout', true );
-		$order->save();
-		$status_date = gmdate( DATE_ATOM, $order->get_date_created()->getTimestamp() ?? time() );
+	// phpcs:disable WordPress.Security.NonceVerification
+	$newsletter_consent = isset( $_POST['omnisend_newsletter_checkbox'] ) && sanitize_text_field( wp_unslash( $_POST['omnisend_newsletter_checkbox'] ) );
+	$sms_consent        = isset( $_POST['omnisend_sms_checkbox'] ) && sanitize_text_field( wp_unslash( $_POST['omnisend_sms_checkbox'] ) );
+	// phpcs:enable WordPress.Security.NonceVerification
 
-		$identifiers = array();
+	if ( ! $sms_consent && ! $newsletter_consent ) {
+		return; // consent was not provided.
+	}
 
-		$billing_email = filter_input( INPUT_POST, 'billing_email', FILTER_SANITIZE_EMAIL );
-		if ( $billing_email != '' ) {
-			$email_identifier = array(
-				'type'     => 'email',
-				'id'       => $billing_email,
-				'channels' => array(
-					'email' => array(
-						'status'     => 'subscribed',
-						'statusDate' => $status_date,
-					),
+	$identifiers = array();
+	$order       = wc_get_order( $order_id );
+	$status_date = gmdate( DATE_ATOM, $order->get_date_created()->getTimestamp() ?? time() );
+
+	$newsletter_enabled = Omnisend_Settings::get_checkout_opt_in_status() === Omnisend_Settings::STATUS_ENABLED && Omnisend_Settings::get_checkout_opt_in_text();
+	$sms_enabled        = Omnisend_Settings::get_checkout_sms_opt_in_status() === Omnisend_Settings::STATUS_ENABLED && Omnisend_Settings::get_checkout_sms_opt_in_text();
+
+	$billing_email = filter_input( INPUT_POST, 'billing_email', FILTER_SANITIZE_EMAIL );
+	$billing_phone = filter_input( INPUT_POST, 'billing_phone', FILTER_SANITIZE_NUMBER_INT );
+
+	if ( $billing_email != '' ) {
+		$email_identifier = array(
+			'type'     => 'email',
+			'id'       => $billing_email,
+			'channels' => array(
+				'email' => array(
+					'status'     => $newsletter_consent ? 'subscribed' : 'nonSubscribed',
+					'statusDate' => $status_date,
 				),
-			);
-			array_push( $identifiers, $email_identifier );
-		}
-
-		$billing_phone = filter_input( INPUT_POST, 'billing_phone', FILTER_SANITIZE_NUMBER_INT );
-		if ( $billing_phone != '' ) {
-			$phone_identifier = array(
-				'type'     => 'phone',
-				'id'       => $billing_phone,
-				'channels' => array(
-					'sms' => array(
-						'status'     => 'nonSubscribed',
-						'statusDate' => $status_date,
-					),
-				),
-			);
-			array_push( $identifiers, $phone_identifier );
-		}
-
-		if ( count( $identifiers ) === 0 ) {
-			return;
-		}
-
-		$tags = array( 'source: woocommerce' );
-		$tag  = Omnisend_Settings::get_contact_tag_value();
-
-		if ( $tag ) {
-			$tags[] = $tag;
-		}
-
-		$prepared_contact = array(
-			'identifiers' => $identifiers,
-			'tags'        => $tags,
+			),
 		);
 
-		$link = OMNISEND_API_URL . '/v3/contacts';
-		Omnisend_Helper::omnisend_api( $link, 'POST', $prepared_contact );
+		array_push( $identifiers, $email_identifier );
 	}
+
+	if ( $billing_phone != '' ) {
+		$phone_identifier = array(
+			'type'     => 'phone',
+			'id'       => $billing_phone,
+			'channels' => array(
+				'sms' => array(
+					'status'     => $sms_consent ? 'subscribed' : 'nonSubscribed',
+					'statusDate' => $status_date,
+				),
+			),
+		);
+
+		array_push( $identifiers, $phone_identifier );
+	}
+
+	if ( $newsletter_enabled && $newsletter_consent ) {
+		$order->add_meta_data( 'marketing_opt_in_consent', 'checkout', true );
+	}
+
+	if ( $sms_enabled && $sms_consent ) {
+		$order->add_meta_data( 'marketing_sms_opt_in_consent', 'checkout', true );
+	}
+
+	$order->save();
+
+	if ( count( $identifiers ) === 0 ) {
+		return;
+	}
+
+	$tags = array( 'source: woocommerce' );
+	$tag  = Omnisend_Settings::get_contact_tag_value();
+
+	if ( $tag ) {
+		$tags[] = $tag;
+	}
+
+	$prepared_contact = array(
+		'identifiers' => $identifiers,
+		'tags'        => $tags,
+	);
+
+	$link = OMNISEND_API_URL . '/v3/contacts';
+	Omnisend_Helper::omnisend_api( $link, 'POST', $prepared_contact );
 }
 
-if ( Omnisend_Settings::get_checkout_opt_in_status() === Omnisend_Settings::STATUS_ENABLED && Omnisend_Settings::get_checkout_opt_in_text() ) {
-	// Add the checkbox field.
-	add_action( 'woocommerce_after_checkout_billing_form', 'omnisend_checkbox_custom_checkout_field' );
-	add_action( 'woocommerce_checkout_update_order_meta', 'omnisend_update_contact_status' );
-}
+// Add the checkbox field.
+add_action( 'woocommerce_after_checkout_billing_form', 'omnisend_checkbox_custom_checkout_field' );
+add_action( 'woocommerce_checkout_update_order_meta', 'omnisend_update_contact_status' );
 
 add_action( 'omnisend_plugin_updated', 'omnisend_notify_about_plugin_update' );
 add_action( 'omnisend_plugin_updated', 'omnisend_setup_omnisend_settings' );

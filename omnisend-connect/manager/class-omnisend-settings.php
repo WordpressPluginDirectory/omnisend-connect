@@ -17,6 +17,8 @@ class Omnisend_Settings {
 
 	private const OPTION_CHECKOUT_OPT_IN_STATUS             = 'omnisend_checkout_opt_in_status';
 	private const OPTION_CHECKOUT_OPT_IN_TEXT               = 'omnisend_checkout_opt_in_text';
+	private const OPTION_CHECKOUT_SMS_OPT_IN_STATUS         = 'omnisend_checkout_sms_opt_in_status';
+	private const OPTION_CHECKOUT_SMS_OPT_IN_TEXT           = 'omnisend_checkout_sms_opt_in_text';
 	private const OPTION_CHECKOUT_OPT_IN_PRESELECTED_STATUS = 'omnisend_checkout_opt_in_preselected_status';
 
 	private const OPTION_CONTACT_TAG_STATUS = 'omnisend_contact_tag_status';
@@ -54,6 +56,25 @@ class Omnisend_Settings {
 	}
 
 	/**
+	 * @return string
+	 */
+	public static function get_checkout_sms_opt_in_status() {
+		$status = get_option( self::OPTION_CHECKOUT_SMS_OPT_IN_STATUS, '' );
+
+		if ( self::is_status( $status ) ) {
+			return $status;
+		}
+
+		$text = self::get_checkout_sms_opt_in_text();
+
+		if ( $text ) {
+			return self::STATUS_ENABLED;
+		}
+
+		return self::STATUS_DISABLED;
+	}
+
+	/**
 	 * @param string $status
 	 * @param string $source
 	 */
@@ -70,10 +91,25 @@ class Omnisend_Settings {
 	}
 
 	/**
+	 * @param string $status
+	 * @param string $source
+	 */
+	public static function set_checkout_sms_opt_in_status( $status, $source ) {
+		self::set_option( self::OPTION_CHECKOUT_SMS_OPT_IN_STATUS, $status, $source, array( self::class, 'is_status' ) );
+	}
+
+	/**
 	 * @return string
 	 */
 	public static function get_checkout_opt_in_text() {
 		return get_option( self::OPTION_CHECKOUT_OPT_IN_TEXT, '' );
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function get_checkout_sms_opt_in_text() {
+		return get_option( self::OPTION_CHECKOUT_SMS_OPT_IN_TEXT, '' );
 	}
 
 	/**
@@ -90,6 +126,14 @@ class Omnisend_Settings {
 	 */
 	public static function set_checkout_opt_in_text( $value, $source ) {
 		self::set_option( self::OPTION_CHECKOUT_OPT_IN_TEXT, $value, $source, 'is_string' );
+	}
+
+	/**
+	 * @param string $value
+	 * @param string $source
+	 */
+	public static function set_checkout_sms_opt_in_text( $value, $source ) {
+		self::set_option( self::OPTION_CHECKOUT_SMS_OPT_IN_TEXT, $value, $source, 'is_string' );
 	}
 
 	/**

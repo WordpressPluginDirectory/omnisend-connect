@@ -5,7 +5,7 @@ Tags: Email Marketing, SMS, Marketing, Newsletter, WooCommerce
 Requires at least: 4.7.0
 Tested up to: 6.8
 Requires PHP: 7.1
-Stable tag: 1.16.6
+Stable tag: 1.16.7
 License: GPLv3 or later License
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,9 +16,9 @@ Email Marketing, Newsletter, Email Automation, Forms, Pop Up, SMS, Abandoned Car
 
 = POWERFUL, YET INTUITIVE EMAIL MARKETING, NEWSLETTER, SMS MARKETING & AUTOMATION PLUGIN FOR WOOCOMMERCE =
 
-https://www.youtube.com/watch?v=inmmjXZlz8o
+https://www.youtube.com/watch?v=_1kXbOOg7W0
 
-Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 125,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and effortlessly grow your business. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results — all from within your WordPress dashboard. Best of all, it's completely free to get started!
+Omnisend is the ultimate email & SMS marketing plugin and CRM solution for WooCommerce, and helps more than 150,000 ecommerce stores around the world sell more stuff to more people. Our email marketing platform is designed to help you increase your revenue and effortlessly grow your business. With Omnisend, you can manage your customer relationships, build your email & SMS lists, send targeted campaigns, create automation workflows, and track your results — all from within your WordPress dashboard. Best of all, it's completely free to get started!
 
 Some of the features of Omnisend include:
 
@@ -67,6 +67,17 @@ Once your email marketing campaigns are sent, reports with stats like open rate,
 
 * View your full business insights right from the Omnisend dashboard with graphs, charts, and data widgets
 * Track every email marketing and SMS message and get in-detail metrics
+
+**🤖Omnisend AI
+
+* Instantly generate email copy, subject lines, and preheaders in your brand’s voice
+* Get AI-powered suggestions for grammar, tone, and style improvements
+* Automatically personalize messages based on customer behavior and preferences
+* Recommend the right products for each shopper using browsing and purchase history
+* Dynamically adapt one campaign to different customer types – no need to create multiples
+* Automatically build segments based on purchase data, engagement, RFM, and more
+* Predict churn and re-engage at-risk customers before they drop off
+* Identify high-value shoppers so you can target them with tailored campaigns
 
 **🎉 Ecommerce integrations**
 
@@ -305,6 +316,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 9. Convert more visitors with highly-targeted landing pages
 
 == Changelog ==
+
+= 1.16.7 =
+
+* Updated description and changed logo.
 
 = 1.16.6 =
 

@@ -7,7 +7,7 @@
 
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
-define( 'OMNISEND_WOOCOMMERCE_CHECKOUT_BLOCK_VERSION', '0.1.0' );
+define( 'OMNISEND_WOOCOMMERCE_CHECKOUT_BLOCK_VERSION', '0.1.1' );
 
 /**
  * Class for integrating with WooCommerce Blocks
@@ -38,10 +38,8 @@ class Omnisend_Checkout_Block_Integration implements IntegrationInterface {
 	 */
 	public function register_main_integration() {
 		$script_path = '/build/index.js';
-		$style_path  = '/build/omnisend-checkout-block.css';
 
 		$script_url = plugins_url( $script_path, __FILE__ );
-		$style_url  = plugins_url( $style_path, __FILE__ );
 
 		$script_asset_path = __DIR__ . '/build/index.asset.php';
 		$script_asset      = file_exists( $script_asset_path )
@@ -50,13 +48,6 @@ class Omnisend_Checkout_Block_Integration implements IntegrationInterface {
 				'dependencies' => array(),
 				'version'      => $this->get_file_version( $script_path ),
 			);
-
-		wp_enqueue_style(
-			'omnisend-woocommerce-checkout-block-blocks-integration',
-			$style_url,
-			array(),
-			$this->get_file_version( $style_path )
-		);
 
 		wp_register_script(
 			'omnisend-woocommerce-checkout-block-blocks-integration',
